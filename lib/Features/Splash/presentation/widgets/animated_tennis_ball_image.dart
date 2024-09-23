@@ -1,26 +1,56 @@
 import 'package:flutter/material.dart';
-import 'package:tennis_player_app/Features/Splash/presentation/views/splash_view.dart';
-import 'package:tennis_player_app/Features/Splash/presentation/widgets/tennis_ball_image.dart';
 
-class AnimatedTennisBallImage extends StatelessWidget {
-  const AnimatedTennisBallImage({super.key});
+class AnimatedTennisBallImage extends StatefulWidget {
+  const AnimatedTennisBallImage({
+    super.key,
+    required this.child,
+    required this.isFlipped,
+  });
+  final Widget child;
+  final bool isFlipped;
+  @override
+  State<AnimatedTennisBallImage> createState() =>
+      _AnimatedTennisBallImageState();
+}
+
+class _AnimatedTennisBallImageState extends State<AnimatedTennisBallImage>
+    with SingleTickerProviderStateMixin {
+  late AnimationController animationController;
+  late Animation<Offset> animation;
+
+  @override
+  void initState() {
+    initSlideAnimation();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
-    return TweenAnimationBuilder(
-      tween: Tween<Offset>(
-        begin: getStartPointForTennisImage(context),
-        end: Offset(
-          MediaQuery.sizeOf(context).width / 2.1,
-          MediaQuery.sizeOf(context).height / 1.4,
-        ),
+    return Center(
+      child: SlideTransition(
+        position: animation,
+        child: widget.child,
       ),
-      duration: const Duration(seconds: 2),
-      builder: (BuildContext context, Offset value, Widget? child) {
-        return TennisBallImage(
-          value: value,
-        );
-      },
     );
+  }
+
+  void initSlideAnimation() {
+    animationController = AnimationController(
+      vsync: this,
+      duration: const Duration(seconds: 2),
+    );
+    animation = Tween<Offset>(
+            begin: Offset.zero,
+            end: widget.isFlipped
+                ? const Offset(-0.5, 1.3)
+                : const Offset(0.5, -1.3))
+        .animate(animationController);
+    animationController.forward();
+  }
+
+  @override
+  void dispose() {
+    animationController.dispose();
+    super.dispose();
   }
 }
