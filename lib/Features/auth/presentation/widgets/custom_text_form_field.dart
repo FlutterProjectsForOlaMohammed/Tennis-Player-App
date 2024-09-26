@@ -9,11 +9,13 @@ class CustomTextFormField extends StatelessWidget {
     this.obscureText = false,
     this.keyboardType = TextInputType.text,
     required this.validator,
+    this.initialValue,
   });
   final IconData icon;
   final String hint;
   final bool obscureText;
   final TextInputType keyboardType;
+  final String? initialValue;
   final String? Function(String?)? validator;
   final void Function(String?) onSaved;
   @override
@@ -23,6 +25,7 @@ class CustomTextFormField extends StatelessWidget {
         horizontal: 32,
       ),
       child: TextFormField(
+        initialValue: initialValue,
         keyboardType: keyboardType,
         validator: validator,
         obscureText: obscureText,

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:tennis_player_app/Features/auth/presentation/widgets/cutsom_button.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:tennis_player_app/Features/auth/presentation/view%20model/bloc/bloc/auth_bloc.dart';
+import 'package:tennis_player_app/Features/auth/presentation/widgets/custom_button.dart';
 import 'package:tennis_player_app/Features/auth/presentation/widgets/dot_circle_raw.dart';
 import 'package:tennis_player_app/Features/auth/presentation/widgets/registered_data_page_view.dart';
 
@@ -28,6 +30,7 @@ class _RegisterFormState extends State<RegisterForm> {
         mainAxisSize: MainAxisSize.min,
         children: [
           RegisteredDataPageView(
+            formKey: formKey,
             pageController: pageController,
           ),
           const SizedBox(
@@ -40,12 +43,35 @@ class _RegisterFormState extends State<RegisterForm> {
           CustomButton(
             text: currentPage != 1 ? "NEXT" : "REGISTER",
             onPressed: () {
-              if (formKey.currentState!.validate()) {}
+              if (formKey.currentState!.validate()) {
+                formKey.currentState!.save();
+                var blocData = BlocProvider.of<AuthBloc>(context);
+                currentPage == 0
+                    ? pageController.nextPage(
+                        duration: const Duration(milliseconds: 400),
+                        curve: Curves.linear,
+                      )
+                    : BlocProvider.of<AuthBloc>(context).add(
+                        RegisterEvent(
+                            email: blocData.email!,
+                            password: blocData.password!,
+                            country: blocData.country!,
+                            city: blocData.city!,
+                            phoneNumber: blocData.phoneNumber!,
+                            fullName: blocData.fullName!),
+                      );
+              }
             },
           ),
         ],
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    pageController.dispose();
+    super.dispose();
   }
 
   void listenToPagesIndex() {

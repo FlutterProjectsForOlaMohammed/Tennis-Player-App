@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class OkButton extends StatelessWidget {
   const OkButton({
@@ -16,7 +17,9 @@ class OkButton extends StatelessWidget {
           color: Color(0xff014BB4),
         ),
       ),
-      onPressed: () {},
+      onPressed: () {
+        GoRouter.of(context).pop();
+      },
     );
   }
 }

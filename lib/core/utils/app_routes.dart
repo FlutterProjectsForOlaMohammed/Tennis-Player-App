@@ -1,12 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:tennis_player_app/Features/Splash/presentation/views/splash_view.dart';
+import 'package:tennis_player_app/Features/auth/presentation/view%20model/bloc/bloc/auth_bloc.dart';
 import 'package:tennis_player_app/Features/auth/presentation/view/login_view.dart';
 import 'package:tennis_player_app/Features/auth/presentation/view/register_view.dart';
+import 'package:tennis_player_app/Features/auth/presentation/view/reset_password_view.dart';
+import 'package:tennis_player_app/core/di/service_locator.dart';
 
 class AppRoutes {
   static String loginView = "/loginView";
   static String registerView = "/registerView";
+  static String resetPasswordView = "/resetPasswordView";
 
   static GoRouter router = GoRouter(
     routes: [
@@ -21,7 +26,32 @@ class AppRoutes {
         pageBuilder: (context, state) {
           return routingAnimation(
             state,
-            child: const LoginView(),
+            child: BlocProvider(
+              create: (context) => AuthBloc(
+                sl(),
+                sl(),
+                sl(),
+                sl(),
+              ),
+              child: const LoginView(),
+            ),
+          );
+        },
+      ),
+      GoRoute(
+        path: resetPasswordView,
+        pageBuilder: (context, state) {
+          return routingAnimation(
+            state,
+            child: BlocProvider(
+              create: (context) => AuthBloc(
+                sl(),
+                sl(),
+                sl(),
+                sl(),
+              ),
+              child: const ResetPasswordView(),
+            ),
           );
         },
       ),
@@ -30,7 +60,15 @@ class AppRoutes {
         pageBuilder: (context, state) {
           return routingAnimation(
             state,
-            child: const RegisterView(),
+            child: BlocProvider(
+              create: (context) => AuthBloc(
+                sl(),
+                sl(),
+                sl(),
+                sl(),
+              ),
+              child: const RegisterView(),
+            ),
           );
         },
       ),

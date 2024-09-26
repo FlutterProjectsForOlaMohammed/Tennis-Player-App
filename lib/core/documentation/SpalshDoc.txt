@@ -1,0 +1,90 @@
+Core :
+-------
+    - Errors Folder : Contains Failure File that Manage Failure 
+                      From Firebase Authentication and Firebase FireStore 
+
+    - Functions Folder : Contains Functions For Email Validation and Password Validation based on 
+                         Regular Expression
+
+    - Utils Folder: Contains Files For Assets Used In App (Images) , Colors used in app , 
+                    Routing between Views and TextStyles class 
+
+    - Widgets Folders : contains common Widgets used in all views
+
+    - di (Dependency Injection Folder) : contains objects Created as Singleton using get_it Package ..
+
+
+Features : 
+-----------
+
+    - Splash Feature  
+
+    *  in Splash Feature I added :
+        --> Presentation Layer 
+            Which Contains :
+                -- views : Splash View 
+                -- widgets : Extracted Widgets to Improve Code Rebuildeing 
+            which doesn't Contain : 
+                -- View Models : Because i didn't need any State Mangement In This Feature ,
+                                 It was So Simple to the Extent That i didn't need to add something like bloc or provider ...   
+        
+        --> Data Layer : 
+                -- i didn't add it because there Nothing Like Models or any Data Source That i can get Data From it 
+                   and create an object for that ...
+        
+        --> Domain Layer : 
+                -- i didn't add it because there is no Data Layer --> So If There is No Data Layer , 
+                You will not Communicate With data Source --> So There nothing to handle in Domain Layer    
+
+    - Authentication (Auth) Feature  
+
+    *  in Auth Feature I added :
+        --> Presentation Layer 
+            Which Contains :
+                -- views : Login View , Register View and ResetPassword View  
+                -- widgets : Extracted Widgets to Improve Code Rebuildeing 
+                -- view Model : I Used Here Bloc as a State Managment and I create one Bloc to Handle the 3 Views ,
+                                as all views were Related To each other 
+            
+        
+        --> Data Layer : 
+                -- Data Source : i added 2 Data Source one for implementing and making authentication with  
+                                Firebase and it returns either Failure or Unit 
+                                other Data Source was For accessing FireBase FireStore For adding new user to DB and Getting User Info (Full Name , Phone Number , ....)
+                                FireBase FireStore , i added to use it in the Future For Profile View and access User Info That i took when User made Registeration
+            
+                -- Models : i added one Model and it was User Model to Store User Data that i get it From FireBase 
+                            FireStore
+                
+                -- Repositories (as Implementation) : I Implemented all Abstract Methods That i inherit from  
+                                                      Repositories in Domain Layer Folder .
+
+        
+        --> Domain Layer : 
+
+            -- Entities : i added one Entity and it was User Entity to use in Presentation Layer and Domain 
+                            Layer 
+            
+            -- Use Cases  : i added 3 Use Cases one For Login , and another one For Register and the Other For 
+                            Reset Password 
+                            Bloc will Use them 
+                
+            -- Repositories (as Abstracted) : I added all Abstract Methods That i need to implement it in Data 
+                                            Layer and use to to deal with Data Sources ...
+                                            one for making authentication with Firebase and it returns 
+                                            either Failure or Unit 
+                                            other was For accessing FireBase FireStore For adding new user to DB and Getting User Info (Full Name , Phone Number , ....)
+
+    app Sequence :
+    ---------------
+
+    user Makes action ---> lead to adding an event (Presentation Layer) 
+    ---> event will do an Use case (For example LoginUseCase) (Domain Layer)
+    --> Lead to execute Login method in Repositories (within Data Layer)
+    --> Lead to Dealing With Data Source (Auth) 
+    --> Auth Data Source will Return Either Unit or Failure 
+    --> return Either Unit or Failure to Repositories (Within Data Layer ) 
+    --> return Either Unit or Failure to Use Case 
+    --> and Finally Return To bloc and if 
+        (it was Failure --> then Bloc Will Send Failure State) (it was unit --> then return Succes State ) 
+    --> then UI Updates Based on Comming State ... 

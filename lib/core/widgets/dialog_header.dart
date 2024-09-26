@@ -3,18 +3,19 @@ import 'package:flutter/material.dart';
 class DialogHeader extends StatelessWidget {
   const DialogHeader({
     super.key,
+    required this.headerIcon,
   });
-
+  final IconData headerIcon;
   @override
   Widget build(BuildContext context) {
-    return const CircleAvatar(
+    return CircleAvatar(
       radius: 60,
       backgroundColor: Colors.black,
       child: CircleAvatar(
         radius: 45,
-        backgroundColor: Color(0xff014BB4),
+        backgroundColor: const Color(0xff014BB4),
         child: Icon(
-          Icons.check_box,
+          headerIcon,
           size: 30,
         ),
       ),
