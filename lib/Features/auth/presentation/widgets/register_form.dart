@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:tennis_player_app/Features/auth/presentation/view%20model/bloc/bloc/auth_bloc.dart';
+import 'package:tennis_player_app/Features/auth/presentation/view%20model/bloc/Auth%20Bloc/auth_bloc.dart';
 import 'package:tennis_player_app/Features/auth/presentation/widgets/custom_button.dart';
 import 'package:tennis_player_app/Features/auth/presentation/widgets/dot_circle_raw.dart';
 import 'package:tennis_player_app/Features/auth/presentation/widgets/registered_data_page_view.dart';

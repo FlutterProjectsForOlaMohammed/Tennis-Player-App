@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tennis_player_app/core/Functions/reponsive_font_size.dart';
 
 class CustomTextButton extends StatelessWidget {
   const CustomTextButton({
@@ -18,9 +19,9 @@ class CustomTextButton extends StatelessWidget {
         onPressed: onPressed,
         child: Text(
           text,
-          style: const TextStyle(
-            color: Color.fromARGB(255, 49, 76, 143),
-            fontSize: 17,
+          style: TextStyle(
+            color: const Color.fromARGB(255, 49, 76, 143),
+            fontSize: responsiveFontSize(context, baseFontSize: 17),
           ),
         ),
       ),

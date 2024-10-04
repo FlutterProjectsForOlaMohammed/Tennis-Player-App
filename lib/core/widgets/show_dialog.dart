@@ -1,5 +1,6 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
+import 'package:tennis_player_app/core/Functions/reponsive_font_size.dart';
 import 'package:tennis_player_app/core/widgets/dialog_header.dart';
 import 'package:tennis_player_app/core/widgets/ok_button.dart';
 
@@ -17,8 +18,10 @@ void showingDialog(
     context: context,
     dialogType: DialogType.info,
     title: title,
-    titleTextStyle: const TextStyle(
-        color: Colors.black, fontSize: 26, fontWeight: FontWeight.w300),
+    titleTextStyle: TextStyle(
+        color: Colors.black,
+        fontSize: responsiveFontSize(context, baseFontSize: 26),
+        fontWeight: FontWeight.w300),
     btnOk: const OkButton(),
     useRootNavigator: true,
     enableEnterKey: true,
