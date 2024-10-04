@@ -1,11 +1,18 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:tennis_player_app/Features/auth/presentation/view%20model/bloc/bloc/auth_bloc.dart';
+import 'package:go_router/go_router.dart';
+import 'package:tennis_player_app/Features/auth/presentation/view%20model/bloc/Auth%20Bloc/auth_bloc.dart';
+import 'package:tennis_player_app/core/Functions/reponsive_font_size.dart';
+import 'package:tennis_player_app/core/utils/app_routes.dart';
 import 'package:tennis_player_app/core/widgets/show_dialog.dart';
 
 class CustomButton extends StatelessWidget {
-  const CustomButton({super.key, required this.text, required this.onPressed});
+  const CustomButton({
+    super.key,
+    required this.text,
+    required this.onPressed,
+  });
   final String text;
   final void Function() onPressed;
   @override
@@ -13,18 +20,7 @@ class CustomButton extends StatelessWidget {
     return BlocConsumer<AuthBloc, AuthState>(
       listener: (context, state) {
         checkFailureAuthState(state, context);
-        if (state is LoginSuccessState || state is RegisterSuccessState) {
-          showingDialog(
-            context,
-            title: "Sucessfully",
-            headerIcon: Icons.check,
-          );
-        }
-        if (state is ResetPasswordSuccessState) {
-          showingDialog(context,
-              title: "Check Your Email and Reset Your Password",
-              headerIcon: Icons.check_circle_outline_rounded);
-        }
+        checkSuccessAuthState(state, context);
       },
       builder: (context, state) {
         return SizedBox(
@@ -44,8 +40,8 @@ class CustomButton extends StatelessWidget {
                     )
                   : Text(
                       text,
-                      style: const TextStyle(
-                        fontSize: 26,
+                      style: TextStyle(
+                        fontSize: responsiveFontSize(context, baseFontSize: 26),
                         fontWeight: FontWeight.w600,
                         color: Color(0xffFDF5FE),
                       ),
@@ -55,6 +51,21 @@ class CustomButton extends StatelessWidget {
         );
       },
     );
+  }
+
+  void checkSuccessAuthState(AuthState state, BuildContext context) {
+    if (state is LoginSuccessState) {
+      GoRouter.of(context)
+          .pushReplacement(AppRoutes.homeView, extra: state.email);
+    } else if (state is RegisterSuccessState) {
+      GoRouter.of(context)
+          .pushReplacement(AppRoutes.homeView, extra: state.email);
+    }
+    if (state is ResetPasswordSuccessState) {
+      showingDialog(context,
+          title: "Check Your Email and Reset Your Password",
+          headerIcon: Icons.check_circle_outline_rounded);
+    }
   }
 
   void checkFailureAuthState(AuthState state, BuildContext context) {

@@ -10,12 +10,14 @@ class CustomTextFormField extends StatelessWidget {
     this.keyboardType = TextInputType.text,
     required this.validator,
     this.initialValue,
+    this.suffixWidget,
   });
   final IconData icon;
   final String hint;
   final bool obscureText;
   final TextInputType keyboardType;
   final String? initialValue;
+  final Widget? suffixWidget;
   final String? Function(String?)? validator;
   final void Function(String?) onSaved;
   @override
@@ -32,6 +34,7 @@ class CustomTextFormField extends StatelessWidget {
         onSaved: onSaved,
         cursorColor: Colors.grey,
         decoration: InputDecoration(
+          suffix: suffixWidget,
           hintText: hint,
           prefixIcon: Row(
             mainAxisSize: MainAxisSize.min,

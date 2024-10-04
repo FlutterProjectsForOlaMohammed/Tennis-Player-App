@@ -5,7 +5,7 @@ import 'package:tennis_player_app/core/errors/failures.dart';
 
 abstract class FirebaseFirestoreDataSource {
   Future<Either<Failure, Unit>> addNewUser({required UserEntity user});
-  Future<Either<Failure, UserEntity>> getUserInfo({required UserEntity user});
+  Future<Either<Failure, UserEntity>> getUserInfo({required String email});
 }
 
 class FirebaseFirestoreDataSourceImpl implements FirebaseFirestoreDataSource {
@@ -40,12 +40,11 @@ class FirebaseFirestoreDataSourceImpl implements FirebaseFirestoreDataSource {
 
   @override
   Future<Either<Failure, UserEntity>> getUserInfo(
-      {required UserEntity user}) async {
+      {required String email}) async {
     FirebaseFirestore firestore = FirebaseFirestore.instance;
     CollectionReference users = firestore.collection('users');
     try {
-      QuerySnapshot doc =
-          await users.where('email', isEqualTo: user.email).get();
+      QuerySnapshot doc = await users.where('email', isEqualTo: email).get();
       if (doc.docs.isNotEmpty) {
         Map<String, dynamic> usersData =
             doc.docs.first.data() as Map<String, dynamic>;

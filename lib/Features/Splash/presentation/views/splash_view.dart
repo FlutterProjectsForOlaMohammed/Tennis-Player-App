@@ -26,20 +26,20 @@ class _SplashViewState extends State<SplashView> {
     return Scaffold(
       body: Container(
         decoration: splashViewBackground(),
-        child: const Stack(
+        child: Stack(
           children: [
-            AnimatedTennisBallImage(
+            const AnimatedTennisBallImage(
               isFlipped: false,
               child: TennisBallImage(),
             ),
-            AnimatedTennisBallImage(
+            const AnimatedTennisBallImage(
               isFlipped: true,
               child: TennisBallImageFlipped(),
             ),
             Center(
               child: Text(
                 "Tennis Player",
-                style: AppStyles.style32Regular,
+                style: AppStyles.style32Regular(context),
               ),
             ),
           ],

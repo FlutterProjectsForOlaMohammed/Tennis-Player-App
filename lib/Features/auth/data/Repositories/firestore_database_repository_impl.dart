@@ -17,7 +17,7 @@ class FirestoreDatabaseRepositoryImpl implements FirestoreDatabaseRepository {
 
   @override
   Future<Either<Failure, UserEntity>> getUserInfo(
-      {required UserEntity user}) async {
-    return await firebaseFirestoreDataSource.getUserInfo(user: user);
+      {required String email}) async {
+    return await firebaseFirestoreDataSource.getUserInfo(email: email);
   }
 }

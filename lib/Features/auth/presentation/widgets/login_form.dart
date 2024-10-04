@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:tennis_player_app/Features/auth/presentation/view%20model/bloc/bloc/auth_bloc.dart';
+import 'package:tennis_player_app/Features/auth/presentation/view%20model/bloc/Auth%20Bloc/auth_bloc.dart';
 import 'package:tennis_player_app/Features/auth/presentation/widgets/custom_text_button.dart';
 import 'package:tennis_player_app/Features/auth/presentation/widgets/custom_text_form_field.dart';
 import 'package:tennis_player_app/Features/auth/presentation/widgets/custom_button.dart';
@@ -21,6 +21,12 @@ class LoginForm extends StatefulWidget {
 class _LoginFormState extends State<LoginForm> {
   GlobalKey<FormState> formKey = GlobalKey();
   late String email, password;
+  bool visible = true;
+  @override
+  void initState() {
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Form(
@@ -28,29 +34,49 @@ class _LoginFormState extends State<LoginForm> {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          CustomTextFormField(
-            validator: (value) {
-              return emailValidation(value);
-            },
-            icon: Icons.email,
-            hint: "Email",
-            onSaved: (value) {
-              email = value!;
-            },
-          ),
-          const SizedBox(
-            height: 25,
-          ),
-          CustomTextFormField(
-            validator: (value) {
-              return passwordValidation(value);
-            },
-            obscureText: true,
-            icon: Icons.password,
-            hint: "Password",
-            onSaved: (value) {
-              password = value!;
-            },
+          Column(
+            children: [
+              CustomTextFormField(
+                validator: (value) {
+                  return emailValidation(value);
+                },
+                icon: Icons.email,
+                hint: "Email",
+                onSaved: (value) {
+                  email = value!;
+                },
+              ),
+              const SizedBox(
+                height: 25,
+              ),
+              CustomTextFormField(
+                validator: (value) {
+                  return passwordValidation(value);
+                },
+                obscureText: visible,
+                icon: Icons.password,
+                hint: "Password",
+                suffixWidget: InkWell(
+                  onTap: () {
+                    setState(() {
+                      visible = !visible;
+                    });
+                  },
+                  child: visible
+                      ? const Icon(
+                          Icons.visibility,
+                          color: Colors.white,
+                        )
+                      : const Icon(
+                          Icons.visibility_off_outlined,
+                          color: Colors.white,
+                        ),
+                ),
+                onSaved: (value) {
+                  password = value!;
+                },
+              )
+            ],
           ),
           const SizedBox(
             height: 10,
@@ -67,7 +93,7 @@ class _LoginFormState extends State<LoginForm> {
           ),
           CustomButton(
             text: "LOGIN",
-            onPressed: () {
+            onPressed: () async {
               if (formKey.currentState!.validate()) {
                 formKey.currentState!.save();
                 BlocProvider.of<AuthBloc>(context).add(
