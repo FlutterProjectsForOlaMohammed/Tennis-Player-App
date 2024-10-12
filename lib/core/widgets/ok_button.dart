@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:tennis_player_app/core/Functions/reponsive_font_size.dart';
 
 class OkButton extends StatelessWidget {
   const OkButton({
@@ -9,12 +10,12 @@ class OkButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return IconButton(
-      icon: const Text(
+      icon: Text(
         "Ok",
         style: TextStyle(
-          fontSize: 22,
+          fontSize: responsiveFontSize(context, baseFontSize: 22),
           fontWeight: FontWeight.w500,
-          color: Color(0xff014BB4),
+          color: const Color(0xff014BB4),
         ),
       ),
       onPressed: () {

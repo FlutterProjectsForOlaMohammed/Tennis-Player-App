@@ -7,6 +7,7 @@ import 'package:tennis_player_app/Features/auth/domain/Use%20Cases/login_use_cas
 import 'package:tennis_player_app/Features/auth/domain/Use%20Cases/register_use_case.dart';
 import 'package:tennis_player_app/Features/auth/domain/Use%20Cases/reset_password_use_case.dart';
 import 'package:tennis_player_app/core/errors/failures.dart';
+import 'package:tennis_player_app/core/network/check_internet.dart';
 
 part 'auth_event.dart';
 part 'auth_state.dart';
@@ -25,11 +26,11 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     this.resetPasswordUseCase,
     this.firestoreDatabaseRepository,
   ) : super(AuthInitial()) {
-    on<AuthEvent>(
-      (event, emit) async {
-        if (event is LoginEvent) {
+    on<AuthEvent>((event, emit) async {
+      if (event is LoginEvent) {
+        emit(LoginLoadingState());
+        if (await CheckInternet.checkInternet()) {
           absorbPointer = true;
-          emit(LoginLoadingState());
           Either<Failure, Unit> response = await loginUseCase.login(
               email: event.email, password: event.password);
           return response.fold((failure) {
@@ -39,11 +40,18 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
             );
           }, (success) {
             absorbPointer = false;
-            emit(LoginSuccessState());
+            emit(LoginSuccessState(
+                email: event.email, password: event.password));
           });
-        } else if (event is RegisterEvent) {
+        }
+        emit(
+          LoginFailureState(
+              message: "No Internet ,Check Your Internet Connectivity ..."),
+        );
+      } else if (event is RegisterEvent) {
+        emit(RegisterLoadingState());
+        if (await CheckInternet.checkInternet()) {
           absorbPointer = true;
-          emit(RegisterLoadingState());
           Either<Failure, Unit> response = await registerUseCase.register(
             fullName: event.fullName,
             phoneNumber: event.phoneNumber,
@@ -52,14 +60,6 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
             email: event.email,
             password: event.password,
           );
-          UserEntity user = UserEntity(
-            fullName: event.fullName,
-            email: event.email,
-            password: event.password,
-            phoneNumber: event.phoneNumber,
-            country: event.country,
-            city: event.city,
-          );
 
           return response.fold((failure) {
             absorbPointer = false;
@@ -67,6 +67,14 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
               RegisterFailureState(message: failure.message),
             );
           }, (success) async {
+            UserEntity user = UserEntity(
+              fullName: event.fullName,
+              email: event.email,
+              password: event.password,
+              phoneNumber: event.phoneNumber,
+              country: event.country,
+              city: event.city,
+            );
             Either<Failure, Unit> addUsertoDB =
                 await firestoreDatabaseRepository.addNewUser(user: user);
             return addUsertoDB.fold((failure) {
@@ -75,12 +83,20 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
                 RegisterFailureState(message: failure.message),
               );
             }, (success) {
-              emit(RegisterSuccessState());
+              emit(
+                RegisterSuccessState(email: event.email),
+              );
             });
           });
-        } else if (event is ResetPasswordEvent) {
+        }
+        emit(
+          RegisterFailureState(
+              message: "No Internet ,Check Your Internet Connectivity ..."),
+        );
+      } else if (event is ResetPasswordEvent) {
+        emit(ResetPasswordLoadingState());
+        if (await CheckInternet.checkInternet()) {
           absorbPointer = true;
-          emit(ResetPasswordLoadingState());
           Either<Failure, Unit> response =
               await resetPasswordUseCase.resetPassword(
             email: event.email,
@@ -97,7 +113,11 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
             );
           });
         }
-      },
-    );
+        emit(
+          ResetPasswordFailureState(
+              message: "No Internet ,Check Your Internet Connectivity ..."),
+        );
+      }
+    });
   }
 }

@@ -128,6 +128,65 @@ class FirebaseFirestoreFailure extends Failure {
   }
 }
 
+class ApiFailure extends Failure {
+  ApiFailure({required super.message});
+  factory ApiFailure.handleError({required int statusCode}) {
+    switch (statusCode) {
+      case 204: // No Content
+        return ApiFailure(
+          message: 'Request successful, but no content returned.',
+        );
+
+      case 400: // Bad Request
+        return ApiFailure(
+          message: 'Bad Request: The request was invalid.',
+        );
+      case 401: // Unauthorized
+        return ApiFailure(
+          message: 'Unauthorized: Authentication required.',
+        );
+      case 403: // Forbidden
+        return ApiFailure(
+          message:
+              'Forbidden: You do not have permission to access this resource.',
+        );
+      case 404: // Not Found
+        return ApiFailure(
+          message: 'Not Found: The requested resource was not found.',
+        );
+
+      case 429: // Too Many Requests
+        return ApiFailure(
+          message: 'Too Many Requests: You have exceeded the rate limit.',
+        );
+
+      case 500: // Internal Server Error
+        return ApiFailure(
+          message:
+              'Internal Server Error: The server encountered an unexpected condition.',
+        );
+      case 502: // Bad Gateway
+        return ApiFailure(
+          message:
+              'Bad Gateway: The server received an invalid response from an upstream server.',
+        );
+      case 503: // Service Unavailable
+        return ApiFailure(
+          message: 'Service Unavailable: The server is currently unavailable.',
+        );
+      case 504: // Gateway Timeout
+        return ApiFailure(
+          message:
+              'Gateway Timeout: The server did not receive a timely response from an upstream server.',
+        );
+      default:
+        return ApiFailure(
+          message: 'An unexpected error occurred. Status code: $statusCode',
+        );
+    }
+  }
+}
+
 class UnexpectedFailure extends Failure {
   const UnexpectedFailure({required super.message});
 }

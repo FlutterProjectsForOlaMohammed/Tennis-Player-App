@@ -1,17 +1,26 @@
 import 'package:flutter/material.dart';
+import 'package:tennis_player_app/core/Functions/reponsive_font_size.dart';
 
 class AppStyles {
-  static const style32Regular = TextStyle(
-    fontFamily: "Agbalumo",
-    color: (Colors.white),
-    fontSize: 32,
-  );
-  static const style16Light = TextStyle(
-    fontSize: 16,
-    fontWeight: FontWeight.w300,
-  );
-  static const style45Bold = TextStyle(
-    fontSize: 45,
-    fontWeight: FontWeight.w700,
-  );
+  static TextStyle style32Regular(BuildContext context) {
+    return TextStyle(
+      fontFamily: "Agbalumo",
+      color: (Colors.white),
+      fontSize: responsiveFontSize(context, baseFontSize: 32),
+    );
+  }
+
+  static TextStyle style16Light(BuildContext context) {
+    return TextStyle(
+      fontSize: responsiveFontSize(context, baseFontSize: 16),
+      fontWeight: FontWeight.w300,
+    );
+  }
+
+  static TextStyle style45Bold(BuildContext context) {
+    return TextStyle(
+      fontSize: responsiveFontSize(context, baseFontSize: 45),
+      fontWeight: FontWeight.w700,
+    );
+  }
 }

@@ -5,7 +5,11 @@ sealed class AuthState {}
 
 final class AuthInitial extends AuthState {}
 
-class LoginSuccessState extends AuthState {}
+class LoginSuccessState extends AuthState {
+  final String email;
+  final String password;
+  LoginSuccessState({required this.email, required this.password});
+}
 
 class LoginLoadingState extends AuthState {}
 
@@ -17,7 +21,11 @@ class LoginFailureState extends AuthState {
   });
 }
 
-class RegisterSuccessState extends AuthState {}
+class RegisterSuccessState extends AuthState {
+  final String email;
+
+  RegisterSuccessState({required this.email});
+}
 
 class RegisterLoadingState extends AuthState {}
 

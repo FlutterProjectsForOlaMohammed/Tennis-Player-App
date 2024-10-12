@@ -1,6 +1,7 @@
-// ignore_for_file: prefer_single_quotes
 class AppAssets {
   AppAssets._();
+
+  static const String imagesGoogleMap = "assets/images/googleMap.jpg";
 
   static const String imagesSplashViewBackground =
       "assets/images/SplashViewBackground.png";

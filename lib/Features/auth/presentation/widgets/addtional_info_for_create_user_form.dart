@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:tennis_player_app/Features/auth/presentation/view%20model/bloc/bloc/auth_bloc.dart';
+import 'package:tennis_player_app/Features/auth/presentation/view%20model/bloc/Auth%20Bloc/auth_bloc.dart';
 import 'package:tennis_player_app/Features/auth/presentation/widgets/custom_text_form_field.dart';
+import 'package:tennis_player_app/core/Functions/empty_value_validation.dart';
+import 'package:tennis_player_app/core/Functions/phone_number_validation.dart';
 
 class AdditionalInfoForCreateUserForm extends StatefulWidget {
   const AdditionalInfoForCreateUserForm({
@@ -25,10 +27,7 @@ class _AdditionalInfoForCreateUserFormState
         CustomTextFormField(
           initialValue: blocData.country,
           validator: (value) {
-            if (value?.isEmpty ?? true) {
-              return "Required Field ";
-            }
-            return null;
+            return emptyValueValidation(value);
           },
           icon: Icons.location_city,
           hint: "Country",
@@ -42,10 +41,7 @@ class _AdditionalInfoForCreateUserFormState
         CustomTextFormField(
           initialValue: blocData.city,
           validator: (value) {
-            if (value?.isEmpty ?? true) {
-              return "Required Field ";
-            }
-            return null;
+            return emptyValueValidation(value);
           },
           icon: Icons.location_city,
           hint: "City",
@@ -59,20 +55,7 @@ class _AdditionalInfoForCreateUserFormState
         CustomTextFormField(
           initialValue: blocData.phoneNumber,
           validator: (value) {
-            if (value?.isEmpty ?? true) {
-              return "Required Field ";
-            }
-            if (value!.length != 11) {
-              return "it must be 11 numbers";
-            }
-            if (value.substring(0, 3) == "010" ||
-                value.substring(0, 3) == "011" ||
-                value.substring(0, 3) == "012" ||
-                value.substring(0, 3) == "015") {
-              return null;
-            } else {
-              return "Your Number Must Begin With 010 / 011 / 012 / 015";
-            }
+            return phoneNumberValidation(value);
           },
           icon: Icons.phone,
           keyboardType: TextInputType.number,

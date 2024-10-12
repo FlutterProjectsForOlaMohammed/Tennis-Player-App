@@ -4,8 +4,11 @@ import 'package:tennis_player_app/Features/auth/presentation/widgets/addtional_i
 import 'package:tennis_player_app/Features/auth/presentation/widgets/base_info_for_create_user_form.dart';
 
 class RegisteredDataPageView extends StatelessWidget {
-  const RegisteredDataPageView(
-      {super.key, required this.pageController, required this.formKey});
+  const RegisteredDataPageView({
+    super.key,
+    required this.pageController,
+    required this.formKey,
+  });
   final PageController pageController;
   final GlobalKey<FormState> formKey;
   @override
