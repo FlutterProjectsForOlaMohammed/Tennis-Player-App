@@ -8,7 +8,7 @@ abstract class AiPredictionDataSource {
 }
 
 class AiPredictionDataSourceImpl implements AiPredictionDataSource {
-  String localHostUrl = 'http://192.168.1.6:5001';
+  String localHostUrl = 'http://192.168.1.7:5001';
   @override
   Future<Either<Failure, int>> getPrediction(
       {required List<int> features}) async {
