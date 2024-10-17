@@ -1,19 +1,21 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:tennis_player_app/Features/Favorite/Presentation/view%20models/Favorite%20Locations%20Bloc/favorite_locations_bloc.dart';
+import 'package:tennis_player_app/core/common/blocs/Favorite%20Locations%20Bloc/favorite_locations_bloc.dart';
 import 'package:tennis_player_app/Features/Home/Presentation/widgets/favorite_icon.dart';
-import 'package:tennis_player_app/Features/Home/domain/enities/weather_enitiy.dart';
-import 'package:tennis_player_app/core/Functions/reponsive_font_size.dart';
+import 'package:tennis_player_app/core/Functions/responsive_font_size.dart';
+import 'package:tennis_player_app/core/common/enities/weather_enitiy.dart';
 import 'package:tennis_player_app/core/di/service_locator.dart';
 
 class WeatherContainer extends StatelessWidget {
   const WeatherContainer({
     super.key,
     required this.weatherData,
+    required this.email,
   });
 
   final List<WeatherEnitiy> weatherData;
+  final String email;
 
   @override
   Widget build(BuildContext context) {
@@ -67,6 +69,7 @@ class WeatherContainer extends StatelessWidget {
           BlocProvider(
             create: (context) => FavoriteLocationsBloc(sl(), sl(), sl()),
             child: FavoriteIcon(
+              email: email,
               weatherEnitiy: weatherData[0],
             ),
           )

@@ -1,0 +1,18 @@
+import 'package:dartz/dartz.dart';
+import 'package:tennis_player_app/Features/Home/domain/Repositories/home_repository.dart';
+import 'package:tennis_player_app/core/common/enities/weather_enitiy.dart';
+import 'package:tennis_player_app/core/errors/failures.dart';
+
+class GetAiPredictionUseCase {
+  final HomeRepository homeRepository;
+
+  const GetAiPredictionUseCase({
+    required this.homeRepository,
+  });
+
+  Future<Either<Failure, int>> predict(WeatherEnitiy weatherEnitiy) async {
+    List<int> features =
+        weatherEnitiy.transformationtoAiModelData(weather: weatherEnitiy);
+    return homeRepository.aiPrediction(features);
+  }
+}

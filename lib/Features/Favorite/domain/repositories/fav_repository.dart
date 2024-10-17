@@ -4,7 +4,9 @@ import 'package:tennis_player_app/core/errors/failures.dart';
 
 abstract class FavRepository {
   Future<Either<Failure, Unit>> deleteLocationFromDB(
-      {required LocationEnitiy location});
-  Future<Either<Failure, List<LocationEnitiy>>> getLocationFromDB();
-  Future<Either<Failure, Unit>> addDataToDB({required LocationEnitiy location});
+      {required LocationEnitiy location, required String email});
+  Future<Either<Failure, List<LocationEnitiy>>> getLocationFromDB(
+      {required String email});
+  Future<Either<Failure, Unit>> addDataToDB(
+      {required LocationEnitiy location, required String email});
 }

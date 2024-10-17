@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tennis_player_app/Features/Home/Presentation/widgets/city_weather_item.dart';
-import 'package:tennis_player_app/Features/Home/domain/enities/weather_enitiy.dart';
+import 'package:tennis_player_app/core/common/enities/weather_enitiy.dart';
 
 class CityWeatherGridView extends StatelessWidget {
   const CityWeatherGridView({

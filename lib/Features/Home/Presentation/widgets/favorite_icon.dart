@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:tennis_player_app/Features/Favorite/Presentation/view%20models/Favorite%20Locations%20Bloc/favorite_locations_bloc.dart';
+import 'package:tennis_player_app/core/common/blocs/Favorite%20Locations%20Bloc/favorite_locations_bloc.dart';
 import 'package:tennis_player_app/Features/Favorite/domain/enities/location_enitiy.dart';
-import 'package:tennis_player_app/Features/Home/domain/enities/weather_enitiy.dart';
+import 'package:tennis_player_app/core/common/enities/weather_enitiy.dart';
 
 class FavoriteIcon extends StatefulWidget {
   const FavoriteIcon({
     super.key,
     required this.weatherEnitiy,
+    required this.email,
   });
   final WeatherEnitiy weatherEnitiy;
+  final String email;
   @override
   State<FavoriteIcon> createState() => _FavoriteIconState();
 }
@@ -40,7 +42,8 @@ class _FavoriteIconState extends State<FavoriteIcon> {
                         lat: widget.weatherEnitiy.lat,
                         lon: widget.weatherEnitiy.lon);
                     BlocProvider.of<FavoriteLocationsBloc>(context).add(
-                      DeleteFavoriteLocationEvent(location: locationEnitiy),
+                      DeleteFavoriteLocationEvent(widget.email,
+                          location: locationEnitiy),
                     );
                     _switchBetweenIcons();
                   },
@@ -48,7 +51,7 @@ class _FavoriteIconState extends State<FavoriteIcon> {
               : IconButton(
                   onPressed: () {
                     BlocProvider.of<FavoriteLocationsBloc>(context).add(
-                      AddFavoriteLocationsEvent(
+                      AddFavoriteLocationsEvent(widget.email,
                           weatherEnitiy: widget.weatherEnitiy),
                     );
                     _switchBetweenIcons();

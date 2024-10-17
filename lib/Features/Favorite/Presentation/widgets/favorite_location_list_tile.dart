@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tennis_player_app/Features/Favorite/Presentation/widgets/favorite_location_list_tile_actions.dart';
-import 'package:tennis_player_app/core/Functions/reponsive_font_size.dart';
+import 'package:tennis_player_app/core/Functions/responsive_font_size.dart';
 import 'package:tennis_player_app/core/utils/app_colors.dart';
 
 class FavLocationListTile extends StatelessWidget {
@@ -9,8 +9,10 @@ class FavLocationListTile extends StatelessWidget {
     required this.cityName,
     required this.lat,
     required this.lon,
+    required this.email,
   });
   final String cityName, lat, lon;
+  final String email;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -24,13 +26,14 @@ class FavLocationListTile extends StatelessWidget {
         title: Text(
           cityName,
           style: TextStyle(
-              color: AppColors.kPrimaryColor,
-              fontSize: responsiveFontSize(context, baseFontSize: 20),
-              fontWeight: FontWeight.w600),
+            color: AppColors.kPrimaryColor,
+            fontSize: responsiveFontSize(context, baseFontSize: 20),
+            fontWeight: FontWeight.w600,
+          ),
         ),
         leading: const Icon(Icons.location_on_outlined),
         trailing: FavoriteLocationListTileActions(
-            cityName: cityName, lat: lat, lon: lon),
+            email: email, cityName: cityName, lat: lat, lon: lon),
       ),
     );
   }

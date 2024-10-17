@@ -1,6 +1,6 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
-import 'package:tennis_player_app/core/Functions/reponsive_font_size.dart';
+import 'package:tennis_player_app/core/Functions/responsive_font_size.dart';
 import 'package:tennis_player_app/core/widgets/dialog_header.dart';
 import 'package:tennis_player_app/core/widgets/ok_button.dart';
 

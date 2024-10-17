@@ -27,8 +27,8 @@ class LoginView extends StatelessWidget {
                     children: [
                       SizedBox(
                         height: MediaQuery.of(context).viewInsets.bottom == 0
-                            ? 0
-                            : 100,
+                            ? 10
+                            : 50,
                       ),
                       Text(
                         "LOGIN",

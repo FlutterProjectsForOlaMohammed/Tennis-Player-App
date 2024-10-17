@@ -11,6 +11,10 @@ class CustomTextFormField extends StatelessWidget {
     required this.validator,
     this.initialValue,
     this.suffixWidget,
+    this.readOnly,
+    this.enable,
+    this.onTap,
+    this.controller,
   });
   final IconData icon;
   final String hint;
@@ -18,8 +22,13 @@ class CustomTextFormField extends StatelessWidget {
   final TextInputType keyboardType;
   final String? initialValue;
   final Widget? suffixWidget;
+  final TextEditingController? controller;
+  final void Function()? onTap;
   final String? Function(String?)? validator;
   final void Function(String?) onSaved;
+  final bool? readOnly;
+  final bool? enable;
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -27,6 +36,12 @@ class CustomTextFormField extends StatelessWidget {
         horizontal: 32,
       ),
       child: TextFormField(
+        controller: controller,
+        onTap: onTap,
+        enabled: enable ?? true,
+        showCursor: true,
+        enableInteractiveSelection: false,
+        readOnly: readOnly ?? false,
         initialValue: initialValue,
         keyboardType: keyboardType,
         validator: validator,

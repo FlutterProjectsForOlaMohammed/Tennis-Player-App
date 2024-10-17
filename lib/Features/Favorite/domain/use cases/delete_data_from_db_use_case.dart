@@ -9,7 +9,8 @@ class DeleteDataFromDbUseCase {
   DeleteDataFromDbUseCase({required this.favRepository});
 
   Future<Either<Failure, Unit>> deleteDataFromDataBase(
-      {required LocationEnitiy location}) async {
-    return await favRepository.deleteLocationFromDB(location: location);
+      {required LocationEnitiy location, required String email}) async {
+    return await favRepository.deleteLocationFromDB(
+        location: location, email: email);
   }
 }

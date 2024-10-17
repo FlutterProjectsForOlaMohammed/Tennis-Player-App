@@ -8,7 +8,8 @@ class GetDataFromDbUseCase {
 
   GetDataFromDbUseCase({required this.favRepository});
 
-  Future<Either<Failure, List<LocationEnitiy>>> getDataFromDataBase() async {
-    return await favRepository.getLocationFromDB();
+  Future<Either<Failure, List<LocationEnitiy>>> getDataFromDataBase(
+      {required String email}) async {
+    return await favRepository.getLocationFromDB(email: email);
   }
 }

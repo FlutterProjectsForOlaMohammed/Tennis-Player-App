@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tennis_player_app/Features/Home/Presentation/widgets/grid_view_item_title.dart';
-import 'package:tennis_player_app/core/Functions/reponsive_font_size.dart';
+import 'package:tennis_player_app/core/Functions/responsive_font_size.dart';
 
 class CityWeatherItem extends StatelessWidget {
   const CityWeatherItem({

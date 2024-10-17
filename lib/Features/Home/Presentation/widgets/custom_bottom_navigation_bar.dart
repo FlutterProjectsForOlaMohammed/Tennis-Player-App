@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:tennis_player_app/Features/Home/Presentation/view%20model/BottomNavigationBarBloc/bottom_navigation_bar_bloc.dart';
+import 'package:tennis_player_app/core/common/blocs/BottomNavigationBarBloc/bottom_navigation_bar_bloc.dart';
 import 'package:tennis_player_app/Features/Home/Presentation/widgets/custom_bottom_navigation_bar_item.dart';
 
 class CustomBottomNavigationBar extends StatefulWidget {
@@ -37,7 +37,7 @@ class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
                       isSelected = 0;
                     });
                     BlocProvider.of<BottomNavigationBarBloc>(context).add(
-                      NavigateToFavoriteEvent(),
+                      NavigateToProfileEvent(),
                     );
                   }
                 },

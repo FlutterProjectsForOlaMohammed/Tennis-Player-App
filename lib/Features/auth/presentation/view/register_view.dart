@@ -12,43 +12,48 @@ class RegisterView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: SingleChildScrollView(
-          child: BlocBuilder<AuthBloc, AuthState>(
-            builder: (context, state) {
-              return AbsorbPointer(
-                absorbing: BlocProvider.of<AuthBloc>(context).absorbPointer,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    SizedBox(
-                      height: MediaQuery.of(context).viewInsets.bottom == 0
-                          ? 0
-                          : 100,
+      body: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.only(top: 20, bottom: 10),
+          child: Center(
+            child: SingleChildScrollView(
+              child: BlocBuilder<AuthBloc, AuthState>(
+                builder: (context, state) {
+                  return AbsorbPointer(
+                    absorbing: BlocProvider.of<AuthBloc>(context).absorbPointer,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        SizedBox(
+                          height: MediaQuery.of(context).viewInsets.bottom == 0
+                              ? 10
+                              : 50,
+                        ),
+                        Text(
+                          "REGISTER",
+                          style: AppStyles.style45Bold(context),
+                        ),
+                        Text(
+                          "CREATE AN ACCOUNT TO MAKE SDFSDF",
+                          style: AppStyles.style16Light(context),
+                        ),
+                        const SizedBox(
+                          height: 100,
+                        ),
+                        const RegisterForm(),
+                        CustomTextButton(
+                          textAlignmentGeometry: Alignment.center,
+                          text: "HAVE AN ACCOUNT ? ",
+                          onPressed: () {
+                            GoRouter.of(context).pop();
+                          },
+                        ),
+                      ],
                     ),
-                    Text(
-                      "REGISTER",
-                      style: AppStyles.style45Bold(context),
-                    ),
-                    Text(
-                      "CREATE AN ACCOUNT TO MAKE SDFSDF",
-                      style: AppStyles.style16Light(context),
-                    ),
-                    const SizedBox(
-                      height: 100,
-                    ),
-                    const RegisterForm(),
-                    CustomTextButton(
-                      textAlignmentGeometry: Alignment.center,
-                      text: "HAVE AN ACCOUNT ? ",
-                      onPressed: () {
-                        GoRouter.of(context).pop();
-                      },
-                    ),
-                  ],
-                ),
-              );
-            },
+                  );
+                },
+              ),
+            ),
           ),
         ),
       ),

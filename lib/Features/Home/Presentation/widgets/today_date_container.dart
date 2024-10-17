@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:tennis_player_app/core/Functions/reponsive_font_size.dart';
+import 'package:tennis_player_app/core/Functions/responsive_font_size.dart';
 
 class TodayDateContainer extends StatelessWidget {
   const TodayDateContainer({
@@ -28,9 +28,10 @@ class TodayDateContainer extends StatelessWidget {
           Text(
             date,
             style: TextStyle(
-                color: const Color(0xff0C4CA5),
-                fontWeight: FontWeight.w900,
-                fontSize: responsiveFontSize(context, baseFontSize: 25)),
+              color: const Color(0xff0C4CA5),
+              fontWeight: FontWeight.w900,
+              fontSize: responsiveFontSize(context, baseFontSize: 25),
+            ),
           ),
         ],
       ),

@@ -1,0 +1,43 @@
+- Core 
+
+In the Core , I added:
+    --> Error Handling
+        Which Contains:
+            -- Failures: Handle different failure scenarios, including:
+                1. Failure: Base class for all failures.
+                2. FirebaseFirestoreFailure: Handles errors specific to Firebase Firestore operations.
+                3. UnexpectedFailure: Captures unexpected errors. 
+    --> Network 
+        Which Contains:
+            -- Network Connectivity Check:
+                1. CheckInternet: Utility class to check internet connectivity status. 
+            
+    --> Common Widgets
+        Which Contains:
+            -- Widgets: Reusable UI components across features, including:
+                1. LoadingIndicator: Widget for displaying loading state.
+                2. ErrorMessage: Widget for displaying error messages. 
+    --> Dependency Injection
+        Which Contains:
+            -- DI Setup: Configuration for dependency injection across the application, including:
+                1. GetIt: Configuration for service locator pattern to manage instances of repositories, data sources, and blocs.
+    --> Common
+        Which Contains:
+            -- Blocs: Shared state management across features
+            
+            -- Data Sources: Abstract interfaces for data access:
+                1. FirebaseFirestoreDataSource: Abstract class defining methods for Firestore operations.
+                    i made it to contain the methods for firebase FireStore and in each feature i implements this class 
+                    and methods which are important to this feature i write an implementation for but if the method
+                    not important for this feature i made it to throw an exception indicates "Not used"
+            
+            -- Entities: Commonly used entities across features, including:
+                1. WeatherEntity: Represents weather data structure for various features.
+            
+            -- Functions
+                -- Utility Functions: General-purpose functions for various tasks, including:
+
+                    1. ResponsiveFontSize: Adjusts font size based on screen size.
+                    2. GetUserInfoFromFirebaseDb: Fetches user information from Firebase database.
+
+        

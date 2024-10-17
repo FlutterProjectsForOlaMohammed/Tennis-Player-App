@@ -1,8 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:dartz/dartz.dart';
 import 'package:meta/meta.dart';
-import 'package:tennis_player_app/Features/auth/domain/Entities/user_entity.dart';
-import 'package:tennis_player_app/Features/auth/domain/Repositories/firestore_database_repository.dart';
+import 'package:tennis_player_app/Features/auth/domain/Use%20Cases/add_new_user_to_firebase_db_use_case.dart';
 import 'package:tennis_player_app/Features/auth/domain/Use%20Cases/login_use_case.dart';
 import 'package:tennis_player_app/Features/auth/domain/Use%20Cases/register_use_case.dart';
 import 'package:tennis_player_app/Features/auth/domain/Use%20Cases/reset_password_use_case.dart';
@@ -16,7 +15,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   final LoginUseCase loginUseCase;
   final RegisterUseCase registerUseCase;
   final ResetPasswordUseCase resetPasswordUseCase;
-  final FirestoreDatabaseRepository firestoreDatabaseRepository;
+  final AddNewUserToFirebaseDbUseCase addNewUserToFirebaseDbUseCase;
   String? fullName, email, password, country, city, phoneNumber;
 
   bool absorbPointer = false;
@@ -24,7 +23,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     this.loginUseCase,
     this.registerUseCase,
     this.resetPasswordUseCase,
-    this.firestoreDatabaseRepository,
+    this.addNewUserToFirebaseDbUseCase,
   ) : super(AuthInitial()) {
     on<AuthEvent>((event, emit) async {
       if (event is LoginEvent) {
@@ -67,7 +66,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
               RegisterFailureState(message: failure.message),
             );
           }, (success) async {
-            UserEntity user = UserEntity(
+            Either<Failure, Unit> addUsertoDB =
+                await addNewUserToFirebaseDbUseCase.add(
               fullName: event.fullName,
               email: event.email,
               password: event.password,
@@ -75,8 +75,6 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
               country: event.country,
               city: event.city,
             );
-            Either<Failure, Unit> addUsertoDB =
-                await firestoreDatabaseRepository.addNewUser(user: user);
             return addUsertoDB.fold((failure) {
               absorbPointer = false;
               emit(

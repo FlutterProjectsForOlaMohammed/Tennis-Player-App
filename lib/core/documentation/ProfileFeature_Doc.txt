@@ -1,0 +1,27 @@
+- Profile Feature
+
+    In the Profile Feature, I added:
+        --> Presentation Layer
+                Which Contains:
+                    -- Views: ProfileView.dart
+                    -- Widgets: Extracted widgets to improve code reusability
+                    -- ViewModels: I have one BLoC:
+                            1. UpdateUserInfoBloc: Manages the state of updating user information, 
+                               handling loading, success, and failure states. 
+    
+        --> Data Layer:
+                    -- Data Sources: I have one main data source:
+                        1. ProfileFirebaseFirestoreDataSourceImpl: Implements data access methods using Firebase Firestore to manage user profiles.
+                            - updateUserInfo: Updates user information for a given email.
+
+                    
+                    -- Models: I have one main model called `UserEntity`, which represents user data (full name, email, phone number, etc.).
+
+                    -- Repositories (Implementation): `ProfileRepositoryImpl` implements all abstract methods inherited from the `ProfileRepository` interface in the Domain Layer.
+    
+        --> Domain Layer:
+                    -- Repositories (Abstracted): ProfileRepository declares abstract methods for:
+                            1. Updating user profile data.
+
+                    -- Use Cases: I added one Use Case:
+                            1. **UpdateUserInfoUseCase:** For updating user information.
