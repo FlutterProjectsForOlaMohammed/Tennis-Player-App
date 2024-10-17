@@ -1,0 +1,32 @@
+- Home Feature  
+
+    In the Favorite Locations Feature, I added:
+    --> Presentation Layer
+            Which Contains:
+                -- Views: FavoriteView.dart
+                -- Widgets: Extracted widgets to improve code reusability
+                -- ViewModels: I have one BLoC:
+                1. FavoriteLocationsBloc: Manages the state of favorite locations, handling fetching, adding, and deleting locations. 
+                and i add it in Core/common/blocs/FavoriteLocationsBloc becasue i used (or triggered in more than place )
+                
+    --> Data Layer:
+            -- Data Sources: I have one main data source:
+                1. FavoriteLocationsDataSourceImpl: Implements data access methods, using Firebase Firestore to manage favorite locations.
+                        - GetFavoriteLocationsUseCase: Retrieves locations for a given email.
+                        - addFavoriteLocation: Adds a new location.
+                        - deleteFavoriteLocation: Deletes a location.
+
+            -- Models: I have one main model called `LocationEntity`, which represents a favorite location 
+
+            -- Repositories (Implementation): `FavoriteLocationsRepositoryImpl` implements all abstract methods inherited from the `FavoriteLocationsRepository` interface in the Domain Layer.
+    
+    --> Domain Layer:
+            -- Repositories (Abstracted): FavoriteLocationsRepository declares abstract methods for:
+                1. Retrieving favorite locations.
+                2. Adding a favorite location.
+                3. Deleting a favorite location.
+
+            -- Use Cases: I added three Use Cases:
+                1. **GetFavoriteLocationsUseCase:** For retrieving favorite locations.
+                2. **AddFavoriteLocationUseCase:** For adding a new favorite location.
+                3. **DeleteFavoriteLocationUseCase:** For deleting a favorite location.

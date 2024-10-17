@@ -5,20 +5,28 @@ import 'package:tennis_player_app/Features/Favorite/domain/repositories/fav_repo
 import 'package:tennis_player_app/Features/Favorite/domain/use%20cases/add_data_to_db.dart';
 import 'package:tennis_player_app/Features/Favorite/domain/use%20cases/delete_data_from_db_use_case.dart';
 import 'package:tennis_player_app/Features/Favorite/domain/use%20cases/get_data_from_db_use_case.dart';
-import 'package:tennis_player_app/Features/Home/Presentation/view%20model/GetWeatherBloc/get_weather_bloc.dart';
-import 'package:tennis_player_app/Features/Home/Presentation/view%20model/UserInfoBloc/get_user_info_bloc.dart';
+import 'package:tennis_player_app/Features/Home/Presentation/view%20model/Get%20User%20Info/get_user_info_bloc.dart';
+import 'package:tennis_player_app/Features/Home/data/data%20source/home_firebase_firestore_data_source_impl.dart';
+import 'package:tennis_player_app/Features/Profile/Presentation/view%20model/Update%20User%20Info%20Bloc/update_user_info_bloc.dart';
+import 'package:tennis_player_app/Features/Profile/data/Repositories/profile_repository_impl.dart';
+import 'package:tennis_player_app/Features/Profile/data/data%20source/profile_firebase_firestore_data_source_impl.dart';
+import 'package:tennis_player_app/Features/Profile/domain/Repositories/profile_repository.dart';
+import 'package:tennis_player_app/Features/Profile/domain/Use%20Cases/update_user_info_use_case.dart';
+import 'package:tennis_player_app/Features/auth/domain/Use%20Cases/add_new_user_to_firebase_db_use_case.dart';
+import 'package:tennis_player_app/core/common/Functions/get_user_info_from_firebase_db.dart';
+import 'package:tennis_player_app/core/common/blocs/GetWeatherBloc/get_weather_bloc.dart';
 import 'package:tennis_player_app/Features/Home/data/Repositories/home_repository_impl.dart';
+import 'package:tennis_player_app/Features/Home/data/data%20source/ai_prediction_data_source.dart';
 import 'package:tennis_player_app/Features/Home/data/data%20source/get_weather_data_source.dart';
 import 'package:tennis_player_app/Features/Home/domain/Repositories/home_repository.dart';
+import 'package:tennis_player_app/Features/Home/domain/use%20cases/get_ai_prediction_use_case.dart';
 import 'package:tennis_player_app/Features/Home/domain/use%20cases/get_forcast_weather_use_case.dart';
 import 'package:tennis_player_app/Features/Home/domain/use%20cases/get_user_info_use_case.dart';
 import 'package:tennis_player_app/Features/Home/domain/use%20cases/get_user_location_use_case.dart';
 import 'package:tennis_player_app/Features/auth/data/Repositories/auth_repository_impl.dart';
-import 'package:tennis_player_app/Features/auth/data/Repositories/firestore_database_repository_impl.dart';
 import 'package:tennis_player_app/Features/auth/data/data%20sources/firebase_auth_data_source.dart';
-import 'package:tennis_player_app/Features/auth/data/data%20sources/firebase_firestore_data_source.dart';
+import 'package:tennis_player_app/Features/auth/data/data%20sources/auth_firebase_firestore_data_source_impl.dart';
 import 'package:tennis_player_app/Features/auth/domain/Repositories/auth_repository.dart';
-import 'package:tennis_player_app/Features/auth/domain/Repositories/firestore_database_repository.dart';
 import 'package:tennis_player_app/Features/auth/domain/Use%20Cases/login_use_case.dart';
 import 'package:tennis_player_app/Features/auth/domain/Use%20Cases/register_use_case.dart';
 import 'package:tennis_player_app/Features/auth/domain/Use%20Cases/reset_password_use_case.dart';
@@ -30,8 +38,13 @@ setupLocator() {
   sl.registerLazySingleton<FirebaseAuthDataSource>(
     () => FirebaseAuthDataSourceImpl(),
   );
+  sl.registerLazySingleton<GetUserInfoFromFirebaseDb>(
+      () => GetUserInfoFromFirebaseDb());
   sl.registerLazySingleton<AuthRepository>(
     () => AuthRepositoryImpl(
+      AuthFirebaseFirestoreDataSourceImpl(
+        getUserInfoFromFirebaseDb: sl(),
+      ),
       authDataSource: sl(),
     ),
   );
@@ -50,12 +63,9 @@ setupLocator() {
       authRepository: sl(),
     ),
   );
-  sl.registerLazySingleton<FirebaseFirestoreDataSource>(
-    () => FirebaseFirestoreDataSourceImpl(),
-  );
-  sl.registerLazySingleton<FirestoreDatabaseRepository>(
-    () => FirestoreDatabaseRepositoryImpl(
-      firebaseFirestoreDataSource: sl(),
+  sl.registerLazySingleton<AddNewUserToFirebaseDbUseCase>(
+    () => AddNewUserToFirebaseDbUseCase(
+      authFirestoreDatabaseRepository: sl(),
     ),
   );
   sl.registerSingleton<AuthBloc>(
@@ -66,10 +76,20 @@ setupLocator() {
       sl(),
     ),
   );
+  sl.registerLazySingleton<AiPredictionDataSource>(
+      () => AiPredictionDataSourceImpl());
+  sl.registerLazySingleton<GetAiPredictionUseCase>(
+    () => GetAiPredictionUseCase(
+      homeRepository: sl(),
+    ),
+  );
   sl.registerLazySingleton<GetWeatherDataSource>(() => GetForcastWeather());
   sl.registerLazySingleton<HomeRepository>(
     () => HomeRepositoryImpl(
-      firebaseFirestoreDataSource: sl(),
+      aiPredictionDataSource: sl(),
+      firebaseFirestoreDataSource: HomeFirebaseFirestoreDataSourceImpl(
+        getUserInfoFromFirebaseDb: sl(),
+      ),
       getWeatherDataSource: sl(),
     ),
   );
@@ -78,8 +98,25 @@ setupLocator() {
       homeRepository: sl(),
     ),
   );
+  sl.registerLazySingleton<ProfileRepository>(
+    () => ProfileRepositoryImpl(
+      firebaseFirestoreDataSource: ProfileFirebaseFirestoreDataSourceImpl(
+        getUserInfoFromFirebaseDb: sl(),
+      ),
+    ),
+  );
+  sl.registerLazySingleton<UpdateUserInfoUseCase>(
+    () => UpdateUserInfoUseCase(
+      profileRepository: sl(),
+    ),
+  );
   sl.registerLazySingleton<GetUserInfoBloc>(
     () => GetUserInfoBloc(
+      sl(),
+    ),
+  );
+  sl.registerLazySingleton<UpdateUserInfoBloc>(
+    () => UpdateUserInfoBloc(
       sl(),
     ),
   );

@@ -1,9 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:tennis_player_app/Features/Home/Presentation/view%20model/UserInfoBloc/get_user_info_bloc.dart';
+import 'package:tennis_player_app/Features/Home/Presentation/view%20model/Get%20User%20Info/get_user_info_bloc.dart';
 import 'package:tennis_player_app/Features/Home/Presentation/widgets/another_destination_button.dart';
-import 'package:tennis_player_app/core/Functions/reponsive_font_size.dart';
+import 'package:tennis_player_app/core/Functions/responsive_font_size.dart';
 import 'package:tennis_player_app/core/utils/app_colors.dart';
 
 class HomeViewAppBar extends StatelessWidget {

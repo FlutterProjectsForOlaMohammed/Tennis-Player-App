@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:tennis_player_app/Features/Home/Presentation/widgets/another_date_container.dart';
 import 'package:tennis_player_app/Features/Home/Presentation/widgets/today_date_container.dart';
-import 'package:tennis_player_app/Features/Home/domain/enities/weather_enitiy.dart';
 import 'package:intl/intl.dart';
+import 'package:tennis_player_app/core/common/enities/weather_enitiy.dart';
 
 class DaysContainer extends StatelessWidget {
   const DaysContainer({

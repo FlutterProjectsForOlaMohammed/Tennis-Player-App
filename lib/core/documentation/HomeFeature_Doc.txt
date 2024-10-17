@@ -1,0 +1,34 @@
+- Home Feature  
+
+*  In the Home Feature, I added:
+    --> Presentation Layer 
+        Which Contains:
+            -- Views: Home View 
+            -- Widgets: Extracted widgets to improve code reusability.
+            -- ViewModels: I have three BLoCs:
+                    1. **AiPredictionBloc:** Handles the result of the AI model's prediction process.
+                    2. **GetUserInfoBloc:** Handles retrieving user information (full name, phone, etc.) from Cloud Firestore.
+                    3. **GetUserLocationBloc:** Handles retrieving the user's location for use with the weather API.
+
+    --> Data Layer:
+            -- Data Sources: I have three different data sources:
+                    1. **AiPredictionDataSource:** Connects to the AI model on the local host.
+                    2. **GetWeatherDataSource:** Retrieves weather data (temperature, etc.) from a weather API.
+                    3. **FirebaseFirestoreDataSource:** Retrieves user information from Cloud Firestore.  (The `getUserInfo` method is implemented; others throw exceptions as they are not used in this feature.)
+
+            -- Models: I have one main model called `WeatherModel`, and other supporting models used within `WeatherModel`.
+
+            -- Repositories (Implementation):  `HomeRepositoryImpl` implements all abstract methods inherited from the `HomeRepository` interface in the Domain Layer.
+
+    --> Domain Layer:
+
+            -- Repositories (Abstracted): `HomeRepository` declares abstract methods for:
+                                        1. Retrieving user information.
+                                        2. Retrieving user location.
+                                        3. Getting coordinates from an address (city name).
+
+            -- Use Cases: I added four Use Cases:
+                            1. **GetAiPredictionUseCase:** For AI prediction.
+                            2. **GetForcastWeatherUseCase:** For retrieving forecast weather data (predicting weather for the next 3 days).
+                            3. **GetUserInfoUseCase:** For retrieving user information.
+                            4. **GetUserLocationUseCase:** For retrieving user location.

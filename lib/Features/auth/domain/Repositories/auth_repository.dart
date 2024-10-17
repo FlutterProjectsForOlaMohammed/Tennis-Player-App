@@ -9,4 +9,7 @@ abstract class AuthRepository {
 
   Future<Either<Failure, Unit>> resetPasswordOperation(
       {required UserEntity user});
+
+  Future<Either<Failure, Unit>> addNewUserToFirebase(
+      {required UserEntity user});
 }

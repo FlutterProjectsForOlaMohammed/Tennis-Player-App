@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:tennis_player_app/Features/auth/presentation/view%20model/bloc/Auth%20Bloc/auth_bloc.dart';
-import 'package:tennis_player_app/core/Functions/reponsive_font_size.dart';
+import 'package:tennis_player_app/core/Functions/responsive_font_size.dart';
 import 'package:tennis_player_app/core/utils/app_routes.dart';
 import 'package:tennis_player_app/core/widgets/show_dialog.dart';
 
@@ -43,7 +43,7 @@ class CustomButton extends StatelessWidget {
                       style: TextStyle(
                         fontSize: responsiveFontSize(context, baseFontSize: 26),
                         fontWeight: FontWeight.w600,
-                        color: Color(0xffFDF5FE),
+                        color: const Color(0xffFDF5FE),
                       ),
                     ),
             ),
