@@ -1,10 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:tennis_player_app/Features/Home/Presentation/view%20model/BottomNavigationBarBloc/bottom_navigation_bar_bloc.dart';
+import 'package:tennis_player_app/core/common/blocs/BottomNavigationBarBloc/bottom_navigation_bar_bloc.dart';
 import 'package:tennis_player_app/Features/Home/Presentation/view%20model/GetUserLocationBloc/get_user_location_bloc.dart';
-import 'package:tennis_player_app/Features/Home/Presentation/view%20model/GetWeatherBloc/get_weather_bloc.dart';
-import 'package:tennis_player_app/core/Functions/reponsive_font_size.dart';
+import 'package:tennis_player_app/core/common/blocs/GetWeatherBloc/get_weather_bloc.dart';
+import 'package:tennis_player_app/core/Functions/responsive_font_size.dart';
 import 'package:tennis_player_app/core/Functions/show_message.dart';
 
 class SearchButton extends StatelessWidget {

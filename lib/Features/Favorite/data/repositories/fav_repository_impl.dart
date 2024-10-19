@@ -10,18 +10,19 @@ class FavRepositoryImpl implements FavRepository {
   FavRepositoryImpl({required this.db});
   @override
   Future<Either<Failure, Unit>> deleteLocationFromDB(
-      {required LocationEnitiy location}) async {
-    return await db.deleteDataFromDB(location: location);
+      {required LocationEnitiy location, required String email}) async {
+    return await db.deleteDataFromDB(location: location, email: email);
   }
 
   @override
-  Future<Either<Failure, List<LocationEnitiy>>> getLocationFromDB() async {
-    return await db.getDataFromDB();
+  Future<Either<Failure, List<LocationEnitiy>>> getLocationFromDB(
+      {required String email}) async {
+    return await db.getDataFromDB(email: email);
   }
 
   @override
   Future<Either<Failure, Unit>> addDataToDB(
-      {required LocationEnitiy location}) async {
-    return await db.addDataFromDB(location: location);
+      {required LocationEnitiy location, required String email}) async {
+    return await db.addDataFromDB(location: location, email: email);
   }
 }

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:tennis_player_app/core/Functions/reponsive_font_size.dart';
+import 'package:tennis_player_app/core/Functions/responsive_font_size.dart';
 
 class CustomTextContainer extends StatelessWidget {
   const CustomTextContainer({
